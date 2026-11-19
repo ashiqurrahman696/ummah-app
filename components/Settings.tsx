@@ -39,7 +39,7 @@ const Settings = () => {
 
     return (
         <Drawer swipeDirection="right">
-            <DrawerTrigger render={<Button className="absolute bottom-4 right-4 bg-(--bg-primary)" variant="outline" />}>
+            <DrawerTrigger render={<Button className="fixed bottom-4 right-4 bg-(--bg-primary)" variant="outline" />}>
                 <BsGear />
             </DrawerTrigger>
             <DrawerContent className="bg-(--bg-primary)">
