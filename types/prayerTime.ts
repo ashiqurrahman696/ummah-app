@@ -6,6 +6,7 @@ export interface Method {
 
 export interface PrayerTimes {
     date: string,
+    timezone: string,
     prayer_times: {
         imsak: string,
         fajr: string,
@@ -34,6 +35,7 @@ export interface Day extends PrayerTimes {
 }
 
 export interface MonthlyPrayerTimes {
+    timezone: string,
     month: number,
     year: number,
     month_name: string,
@@ -62,6 +64,7 @@ export interface RamadanDays {
 }
 
 export interface Ramadan {
+    timezone: string,
     year: number,
     hijri_year: number,
     ramadans_in_year: RamadansInYear[],

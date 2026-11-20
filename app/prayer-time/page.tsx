@@ -68,7 +68,7 @@ const PrayerTimeContent = () => {
     const {data: prayerTimes, isLoading: isPrayerTimesLoading, isError: isPrayerTimesError} = useQuery<PrayerTimes>({
         queryKey: ["prayerTimes", lat, lng, date, method, madhab],
         queryFn: async() => {
-            const {data} = await axios.get(`/api/prayer-times?lat=${lat}&lng=-${lng}&date=${date}&method=${method}&madhab=${madhab}&highLatitudeRule=recommended`);
+            const {data} = await axios.get(`/api/prayer-times?lat=${lat}&lng=${lng}&date=${date}&method=${method}&madhab=${madhab}&highLatitudeRule=recommended`);
             return data.data;
         }
     });
@@ -92,7 +92,7 @@ const PrayerTimeContent = () => {
     return (
         <main className="max-w-7xl w-full mx-auto p-4 space-y-8">
             <h1 className="text-5xl font-bold text-center">Prayer Time</h1>
-            <p className="text-xl text-(--text-secondary) text-center">Daily, Monthly Prayer Time and Ramadan Timetable in your location.</p>
+            <p className="text-lg text-(--text-secondary) text-center">Daily, Monthly Prayer Time and Ramadan Timetable in your location.</p>
             <Tabs defaultValue="dailyPrayer" className="w-full">
                 <TabsList className="bg-(--card-bg) grid max-md:w-full grid-cols-3 md:inline-flex overflow-x-auto overflow-y-hidden">
                     <TabsTrigger value="dailyPrayer">Prayer Time</TabsTrigger>
@@ -121,7 +121,8 @@ const PrayerTimeContent = () => {
                             </div>
                         </div>
                         <div className="min-w-0 col-span-full md:col-span-2">
-                            <h3 className="text-3xl font-bold">Prayer Time ({prayerTimes?.date})</h3>
+                            <h3 className="text-3xl font-bold mb-4">Prayer Time ({prayerTimes?.date})</h3>
+                            <p className="text-lg"><strong>Timezone:</strong> {prayerTimes?.timezone}</p>
                             <div className="w-full max-w-full overflow-x-auto">
                                 <table className="w-full border border-collapse border(--border) text-lg my-4">
                                     <thead>
@@ -196,7 +197,8 @@ const PrayerTimeContent = () => {
                             </div>
                         </div>
                         <div className="min-w-0 col-span-full md:col-span-2">
-                            <h3 className="text-3xl font-bold">Monthly Prayer Time ({monthlyPrayerTimes?.month_name} {monthlyPrayerTimes?.year})</h3>
+                            <h3 className="text-3xl font-bold mb-4">Monthly Prayer Time ({monthlyPrayerTimes?.month_name} {monthlyPrayerTimes?.year})</h3>
+                            <p className="text-lg"><strong>Timezone:</strong> {monthlyPrayerTimes?.timezone}</p>
                             <div className="w-full max-w-full overflow-x-auto">
                                 <table className="w-full border border-collapse border(--border) text-lg my-4">
                                     <thead>
@@ -258,7 +260,8 @@ const PrayerTimeContent = () => {
                             </div>
                         </div>
                         <div className="min-w-0 col-span-full md:col-span-2">
-                            <h3 className="text-3xl font-bold">Ramadan ({ramadan?.hijri_year} Hijri)</h3>
+                            <h3 className="text-3xl font-bold mb-4">Ramadan ({ramadan?.hijri_year} Hijri)</h3>
+                            <p className="text-lg"><strong>Timezone:</strong> {ramadan?.timezone}</p>
                             <div className="w-full max-w-full overflow-x-auto">
                                 <table className="w-full border border-collapse border(--border) text-lg my-4">
                                     <thead>
