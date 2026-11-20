@@ -2,7 +2,7 @@
 import AudioPlayer from "@/components/AudioPlayer";
 import useAxios from "@/hooks/useAxios";
 import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize } from "@/utils/localStorage";
-import { Surah, Tafsir, Verse } from "@/utils/surah";
+import { Surah, Tafsir, Verse } from "@/types/surah";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { Noto_Naskh_Arabic } from "next/font/google";
@@ -136,8 +136,8 @@ const SurahPageContent = () => {
                                 fontSize: `${trFontSize}px`
                             }}>{surah?.verses[verseId - 1].translation}</p>
                             <hr className="bg-(--foreground) mb-2" />
-                            <p className="text-2xl text-center font-semibold mb-2">Tafsir by {tafsir?.author}</p>
-                            <p>{tafsir?.text}</p>
+                            <p className="text-2xl text-center font-semibold mb-2">Tafsir by {tafsir?.author} (<span className="capitalize">{tafsir?.language}</span>)</p>
+                            {tafsir?.language === "arabic" ? <p dir="rtl" className={`text-lg ${notoNaskhArabic.className}`}>{tafsir?.text}</p> : <p className="text-lg">{tafsir?.text}</p>}
                         </motion.div>
                     </motion.div>
                 )}

@@ -162,8 +162,9 @@ const QuranPage = () => {
                             </div>
                         </div>
                         <hr className="bg-(--foreground) mb-2" />
-                        <p className="text-2xl text-center font-semibold mb-2">Tafsir by {tafsir?.author}</p>
-                        <p className="text-lg">{tafsir?.text}</p>
+                        <p className="text-2xl text-center font-semibold mb-2">Tafsir by {tafsir?.author} (<span className="capitalize">{tafsir?.language}</span>)</p>
+                        {tafsir?.language === "arabic" ? <p dir="rtl" className={`text-lg ${notoNaskhArabic.className}`}>{tafsir?.text}</p> : <p className="text-lg">{tafsir?.text}</p>}
+                        
                     </div>
                 </TabsContent>
             </Tabs>

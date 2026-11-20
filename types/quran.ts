@@ -34,6 +34,7 @@ export interface Ayah {
 
 export interface Tafsir {
     name: string,
+    language: string,
     author: string,
     text: string,
 }

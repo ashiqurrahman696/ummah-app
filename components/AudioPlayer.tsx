@@ -79,7 +79,7 @@ export default function AudioPlayer({ src, title = "Audio Track" }: AudioPlayerP
                 onEnded={() => setIsPlaying(false)}
             />
 
-            <p className="font-medium mb-3 truncate">{title}</p>
+            <p className="font-medium mb-3">{title}</p>
 
             <div className="space-y-4">
 

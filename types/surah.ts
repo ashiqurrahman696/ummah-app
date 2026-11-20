@@ -29,6 +29,7 @@ export interface Surah {
 
 export interface Tafsir {
     name: string,
+    language: string,
     author: string,
     text: string,
 }
