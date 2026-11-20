@@ -88,7 +88,7 @@ const QuranPage = () => {
         <main className="w-full max-w-7xl mx-auto p-4">
             <h2 className="text-4xl font-bold text-center mb-6">Al Quran</h2>
             <Tabs defaultValue="surahs" className="w-full">
-                <TabsList className="bg-(--card-bg)">
+                <TabsList className="bg-(--card-bg) grid max-md:w-full grid-cols-2 md:inline-flex overflow-x-auto overflow-y-hidden">
                     <TabsTrigger value="surahs">Surahs</TabsTrigger>
                     <TabsTrigger value="singleVerse">Single Verse</TabsTrigger>
                 </TabsList>

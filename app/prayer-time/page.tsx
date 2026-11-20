@@ -94,9 +94,9 @@ const PrayerTimeContent = () => {
             <h1 className="text-5xl font-bold text-center">Prayer Time</h1>
             <p className="text-xl text-(--text-secondary) text-center">Daily, Monthly Prayer Time and Ramadan Timetable in your location.</p>
             <Tabs defaultValue="dailyPrayer" className="w-full">
-                <TabsList className="bg-(--card-bg)">
-                    <TabsTrigger value="dailyPrayer">Daily Prayer Time</TabsTrigger>
-                    <TabsTrigger value="monthlyPrayer">Prayer Time by Month</TabsTrigger>
+                <TabsList className="bg-(--card-bg) grid max-md:w-full grid-cols-3 md:inline-flex overflow-x-auto overflow-y-hidden">
+                    <TabsTrigger value="dailyPrayer">Prayer Time</TabsTrigger>
+                    <TabsTrigger value="monthlyPrayer">Prayer Month</TabsTrigger>
                     <TabsTrigger value="ramadan">Ramadan</TabsTrigger>
                 </TabsList>
                 <TabsContent value="dailyPrayer">
