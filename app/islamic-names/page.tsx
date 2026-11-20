@@ -45,7 +45,7 @@ const IslamicNamesPage = () => {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="text-(--text-muted) space-y-2">
-                            <p><strong>Gender:</strong> {name.gender}</p>
+                            <p><strong>Gender:</strong> <span className="capitalize">{name.gender}</span></p>
                             <p><strong>Origin:</strong> {name.origin}</p>
                             {name.root && <p><strong>Root:</strong> <span className={notoNaskhArabic.className}>{name.root}</span></p>}
                             <p>{name.note}</p>
