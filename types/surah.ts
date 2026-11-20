@@ -22,6 +22,7 @@ export interface Surah {
         revelation_place: string,
         revelation_order: number,
         verses_count: number,
+        bismillah_pre: boolean
     },
     audio: Audio[],
     verses: Verse[],
