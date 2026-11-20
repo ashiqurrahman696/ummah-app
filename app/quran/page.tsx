@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useAxios from "@/hooks/useAxios";
 import { Ayah, Surahs, Tafsir } from "@/types/quran";
-import { getArFontSize, getReciterId, getTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize } from "@/utils/localStorage";
 import { sortSurahs } from "@/utils/sortSurahs";
 import { useQuery } from "@tanstack/react-query";
 import { Noto_Naskh_Arabic } from "next/font/google";
@@ -23,6 +23,7 @@ const QuranPage = () => {
     const reciterId = getReciterId();
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
+    const tafsirKey = getTafsirKey();
     const verseAudioRef = useRef<HTMLAudioElement | null>(null);
     const axios = useAxios();
 
@@ -45,7 +46,7 @@ const QuranPage = () => {
     const {data: tafsir, isLoading: isLoadingTafsir, isError: isTafsirError} = useQuery<Tafsir>({
         queryKey: ["tafsir", surahId, verseId],
         queryFn: async() => {
-            const {data} = await axios.get(`/api/tafsir/ibn_kathir/surah/${surahId}/ayah/${verseId}`);
+            const {data} = await axios.get(`/api/tafsir/${tafsirKey}/surah/${surahId}/ayah/${verseId}`);
             return data.data.tafsir;
         }
     });
@@ -60,6 +61,8 @@ const QuranPage = () => {
 
         verseAudio.pause();
         verseAudio.currentTime = 0;
+
+        if(!url) return alert("Failed to play verse");
 
         verseAudio.src = url;
         verseAudio.play();

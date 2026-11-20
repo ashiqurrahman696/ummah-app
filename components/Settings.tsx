@@ -14,7 +14,7 @@ import { Label } from "./ui/label";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTrFontSize, saveArFontSize, saveReciterId, saveTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize, saveArFontSize, saveReciterId, saveTafsirKey, saveTrFontSize } from "@/utils/localStorage";
 
 interface Reciter {
     id: number,
@@ -23,19 +23,36 @@ interface Reciter {
     style: string
 }
 
+interface Tafsir {
+    key: string,
+    name: string,
+    language: string,
+    author: string,
+}
+
 const Settings = () => {
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
     const axios = useAxios();
 
-    const {data: reciters, isLoading, isError} = useQuery<Reciter[]>({
+    const {data: reciters} = useQuery<Reciter[]>({
         queryKey: ["reciters"],
         queryFn: async() => {
             const {data} = await axios.get(`/api/quran/reciters`); 
             return data.data.reciters;
         }
     });
+
+    const {data: tafsirs} = useQuery<Tafsir[]>({
+        queryKey: ["tafsirs"],
+        queryFn: async() => {
+            const {data} = await axios.get(`/api/tafsir`); 
+            return data.data.tafasir;
+        }
+    });
+
     const [reciterId, setReciterId] = useState<number>(getReciterId());
+    const [tafsirKey, setTafsirKey] = useState<string>(getTafsirKey() as string);
 
     return (
         <Drawer swipeDirection="right">
@@ -54,6 +71,15 @@ const Settings = () => {
                             setReciterId(Number(e.target.value));
                         }}>
                             {reciters?.map((reciter: Reciter) => <option key={reciter.id} value={reciter.id} className="bg-(--bg-primary)">{reciter.name}</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <Label htmlFor="tafsir">Tafsir</Label>
+                        <select id="tafsir" className="w-full border border(--border) p-2 rounded-lg" value={tafsirKey} onChange={(e) => {
+                            saveTafsirKey(e.target.value);
+                            setTafsirKey(e.target.value);
+                        }}>
+                            {tafsirs?.map((tafsir: Tafsir) => <option key={tafsir.key} value={tafsir.key} className="bg-(--bg-primary)">{tafsir.name} ({tafsir.language})</option>)}
                         </select>
                     </div>
                     <div>

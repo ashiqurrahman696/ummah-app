@@ -1,7 +1,7 @@
 "use client";
 import AudioPlayer from "@/components/AudioPlayer";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize } from "@/utils/localStorage";
 import { Surah, Tafsir, Verse } from "@/utils/surah";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -23,6 +23,7 @@ const SurahPageContent = () => {
     const reciterId = getReciterId();
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
+    const tafsirKey = getTafsirKey();
     const [isTafsirModalOpen, setIsTafsirModalOpen] = useState<boolean>(false);
 
     const {data: surah, isLoading: isLoadingSurah, isError: isSurahError} = useQuery<Surah>({
@@ -36,7 +37,7 @@ const SurahPageContent = () => {
     const {data: tafsir, isLoading: isLoadingTafsir, isError: isTafsirError} = useQuery<Tafsir>({
         queryKey: ["tafsir", id, verseId],
         queryFn: async() => {
-            const {data} = await axios.get(`/api/tafsir/ibn_kathir/surah/${id}/ayah/${verseId}`);
+            const {data} = await axios.get(`/api/tafsir/${tafsirKey}/surah/${id}/ayah/${verseId}`);
             return data.data.tafsir;
         }
     });

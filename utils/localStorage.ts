@@ -8,6 +8,14 @@ const getReciterId = () => {
     return Number(getCookie("reciterId")) || 1;
 }
 
+const saveTafsirKey = (id: string) => {
+    setCookie("tafsirKey", id);
+}
+
+const getTafsirKey = () => {
+    return getCookie("tafsirKey") || "ibn_kathir";
+}
+
 const saveArFontSize = (id: string) => {
     setCookie("arFontSize", id);
 }
@@ -30,4 +38,6 @@ export {
     getArFontSize,
     saveTrFontSize,
     getTrFontSize,
+    saveTafsirKey,
+    getTafsirKey
 };
