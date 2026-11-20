@@ -83,7 +83,7 @@ const SurahPageContent = () => {
             {isSurahError ? <p className="text-center text-2xl font-semibold">Error loading surah...</p> : <>
                 <h3 className="font-bold text-3xl text-center mb-6">{surah?.surah.name_english} (<span className={`${notoNaskhArabic.className}`}>{surah?.surah.name_arabic}</span>) - {surah?.surah.name_translation}</h3>
                 <p className="text-center text-(--text-secondary) mb-6">Ayah {surah?.surah.verses_count} (<span className="capitalize">{surah?.surah.revelation_place}</span>)</p>
-                {surah?.surah.bismillah_pre && <p className={`text-center mb-6 ${notoNaskhArabic.className}`} style={{ 
+                {surah?.surah.bismillah_pre && <p dir="rtl" className={`text-center mb-6 ${notoNaskhArabic.className}`} style={{ 
                     fontSize: `${arFontSize}px`
                 }}>بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>}
                 {surah?.verses.map((verse: Verse) => <div key={verse.ayah}>
