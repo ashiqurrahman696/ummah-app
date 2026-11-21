@@ -26,7 +26,17 @@ export interface Ayah {
         ayah: number,
         arabic: string,
         translations: {
-            sahih_international: string
+            sahih_international: string,
+            pickthall: string,
+            yusuf_ali: string,
+            urdu: string,
+            turkish: string,
+            indonesian: string,
+            french: string,
+            german: string,
+            bengali: string,
+            malay: string,
+            bosnian: string,
         }
     }
     audio: Audio[]

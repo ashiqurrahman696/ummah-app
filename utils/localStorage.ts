@@ -31,6 +31,14 @@ const getTrFontSize = () => {
     return Number(getCookie("trFontSize")) || 20;
 }
 
+const saveTranslation = (id: string) => {
+    setCookie("translation", id);
+}
+
+const getTranslation = () => {
+    return getCookie("translation") || "sahih_international";
+}
+
 export {
     saveReciterId,
     getReciterId,
@@ -39,5 +47,7 @@ export {
     saveTrFontSize,
     getTrFontSize,
     saveTafsirKey,
-    getTafsirKey
+    getTafsirKey,
+    saveTranslation,
+    getTranslation
 };

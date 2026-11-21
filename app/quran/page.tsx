@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useAxios from "@/hooks/useAxios";
 import { Ayah, Surahs, Tafsir } from "@/types/quran";
-import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize } from "@/utils/localStorage";
 import { sortSurahs } from "@/utils/sortSurahs";
 import { useQuery } from "@tanstack/react-query";
 import { Noto_Naskh_Arabic } from "next/font/google";
@@ -24,6 +24,7 @@ const QuranPage = () => {
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
     const tafsirKey = getTafsirKey();
+    const translation = getTranslation();
     const verseAudioRef = useRef<HTMLAudioElement | null>(null);
     const axios = useAxios();
 
@@ -38,7 +39,7 @@ const QuranPage = () => {
     const {data: ayah, isLoading: isAyahLoading, isError: isAyahError} = useQuery<Ayah>({
         queryKey: ["ayah", surahId, verseId],
         queryFn: async() => {
-            const {data} = await axios.get(`/api/quran/surah/${surahId}/ayah/${verseId}`);
+            const {data} = await axios.get(`/api/quran/surah/${surahId}/ayah/${verseId}?script=uthmani`);
             return data.data;
         }
     });
@@ -158,7 +159,7 @@ const QuranPage = () => {
                                 }}>{ayah?.verse.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{ayah?.verse.ayah}</span></p>
                                 <p className="text-(--text-secondary) my-2" style={{ 
                                     fontSize: `${trFontSize}px`
-                                }}>{ayah?.verse.translations.sahih_international}</p>
+                                }}>{ayah?.verse?.translations?.[translation]}</p>
                             </div>
                         </div>
                         <hr className="bg-(--foreground) mb-2" />

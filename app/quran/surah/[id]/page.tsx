@@ -1,7 +1,7 @@
 "use client";
 import AudioPlayer from "@/components/AudioPlayer";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize } from "@/utils/localStorage";
 import { Surah, Tafsir, Verse } from "@/types/surah";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,12 +24,13 @@ const SurahPageContent = () => {
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
     const tafsirKey = getTafsirKey();
+    const translation = getTranslation();
     const [isTafsirModalOpen, setIsTafsirModalOpen] = useState<boolean>(false);
 
     const {data: surah, isLoading: isLoadingSurah, isError: isSurahError} = useQuery<Surah>({
         queryKey: ["surah", id],
         queryFn: async() => {
-            const {data} = await axios.get(`/api/quran/surah/${id}?translation=sahih_international&reciter=${reciterId}`); 
+            const {data} = await axios.get(`/api/quran/surah/${id}?script=uthmani&translation=${translation}&reciter=${reciterId}`); 
             return data.data;
         }
     });

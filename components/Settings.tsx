@@ -14,7 +14,8 @@ import { Label } from "./ui/label";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTafsirKey, getTrFontSize, saveArFontSize, saveReciterId, saveTafsirKey, saveTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize, saveArFontSize, saveReciterId, saveTafsirKey, saveTranslation, saveTrFontSize } from "@/utils/localStorage";
+
 
 interface Reciter {
     id: number,
@@ -35,6 +36,14 @@ const Settings = () => {
     const trFontSize = getTrFontSize();
     const axios = useAxios();
 
+    const {data: translations} = useQuery({
+        queryKey: ["translations"],
+        queryFn: async() => {
+            const {data} = await axios.get(`/api/quran`); 
+            return data.data.translations_available;
+        }
+    })
+
     const {data: reciters} = useQuery<Reciter[]>({
         queryKey: ["reciters"],
         queryFn: async() => {
@@ -53,6 +62,7 @@ const Settings = () => {
 
     const [reciterId, setReciterId] = useState<number>(getReciterId());
     const [tafsirKey, setTafsirKey] = useState<string>(getTafsirKey() as string);
+    const [translation, setTranslation] = useState<string>(getTranslation() as string);
 
     return (
         <Drawer swipeDirection="right">
@@ -80,6 +90,15 @@ const Settings = () => {
                             setTafsirKey(e.target.value);
                         }}>
                             {tafsirs?.map((tafsir: Tafsir) => <option key={tafsir.key} value={tafsir.key} className="bg-(--bg-primary)">{tafsir.name} ({tafsir.language})</option>)}
+                        </select>
+                    </div>
+                    <div>
+                        <Label htmlFor="qtrans">Quran Translations</Label>
+                        <select id="qtrans" className="w-full border border(--border) p-2 rounded-lg" value={translation} onChange={(e) => {
+                            saveTranslation(e.target.value);
+                            setTranslation(e.target.value);
+                        }}>
+                            {translations?.map((translation: string) => <option key={translation} value={translation} className="bg-(--bg-primary)">{translation}</option>)}
                         </select>
                     </div>
                     <div>
