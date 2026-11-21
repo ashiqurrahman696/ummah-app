@@ -85,6 +85,8 @@ const QuranPage = () => {
         setIsVersePlaying(false);
     };
 
+    const translatedVerse = translation === "sahih_international" ? ayah?.verse?.translations.sahih_international : translation === "pickthall" ? ayah?.verse?.translations.pickthall : translation === "yusuf_ali" ? ayah?.verse?.translations.yusuf_ali : translation === "urdu" ? ayah?.verse?.translations.urdu : translation === "turkish" ? ayah?.verse?.translations.turkish : translation === "indonesian" ? ayah?.verse?.translations.indonesian : translation === "french" ? ayah?.verse?.translations.french : translation === "german" ? ayah?.verse?.translations.german : translation === "bengali" ? ayah?.verse?.translations.bengali : translation === "spanish" ? ayah?.verse?.translations.spanish : translation === "malay" ? ayah?.verse?.translations.malay : ayah?.verse?.translations.bosnian;
+
     return (
         <main className="w-full max-w-7xl mx-auto p-4">
             <h2 className="text-4xl font-bold text-center mb-6">Al Quran</h2>
@@ -157,9 +159,9 @@ const QuranPage = () => {
                                 <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{ 
                                     fontSize: `${arFontSize}px`
                                 }}>{ayah?.verse.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{ayah?.verse.ayah}</span></p>
-                                <p className="text-(--text-secondary) my-2" style={{ 
+                                <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                                     fontSize: `${trFontSize}px`
-                                }}>{ayah?.verse?.translations?.[translation]}</p>
+                                }}>{translatedVerse}</p>
                             </div>
                         </div>
                         <hr className="bg-(--foreground) mb-2" />

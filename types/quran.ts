@@ -35,6 +35,7 @@ export interface Ayah {
             french: string,
             german: string,
             bengali: string,
+            spanish: string,
             malay: string,
             bosnian: string,
         }
