@@ -71,8 +71,8 @@ const HadithPage = () => {
                         </div>
                     </div>
                     {isSearchedHadithsLoading && <p className="text-center text-2xl font-semibold">Searching hadith...</p>}
-                    {isSearchedHadithsError ? <p className="text-center text-2xl font-semibold">{query || "Failed to search hadith"}</p> : <>
-                        {searchedHadiths?.hadiths.map((hadith: Hadith) => <div key={hadith.id} className="w-full">
+                    {isSearchedHadithsError ? <p className="text-center text-2xl font-semibold">{query || "Please write something to search"}</p> : <>
+                        {searchedHadiths?.hadiths?.length !== 0 ? searchedHadiths?.hadiths.map((hadith: Hadith) => <div key={hadith.id} className="w-full">
                             <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{ 
                                 fontSize: `${arFontSize}px`
                             }}>{hadith.arabic.replaceAll("ٱ", "ا")}</p>
@@ -81,7 +81,7 @@ const HadithPage = () => {
                             }}>{hadith.english}</p>
                             <p className="italic text-(--text-muted) mb-2">{hadith.collection_name}: {hadith.hadithnumber}</p>
                             <hr className="bg-(--foreground) mb-2" />
-                        </div>)}
+                        </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{query}&quot;</p>}
                     </>}
                 </TabsContent>
             </Tabs>
