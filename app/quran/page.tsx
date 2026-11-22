@@ -131,7 +131,7 @@ const QuranPage = () => {
                             <div>
                                 <label htmlFor="surahs">Surah</label>
                                 <select id="surahs" className="w-full border border(--border) p-2 rounded-lg" onChange={(e) => {setSurahId(Number(e.target.value)); stopVerse()}}>
-                                    {surahs?.map((surah: Surahs) => <option key={surah.number} value={surah.number} className="bg-(--bg-primary)">{surah.name_english}</option>)}
+                                    {surahs?.map((surah: Surahs) => <option key={surah.number} value={surah.number} className="bg-(--bg-primary)">{surah.number}. {surah.name_english}</option>)}
                                 </select>
                             </div>
                             <div>
