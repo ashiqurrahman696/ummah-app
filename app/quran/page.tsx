@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useAxios from "@/hooks/useAxios";
-import { Ayah, Surahs, Tafsir } from "@/types/quran";
+import { Ayah, QuranSearch, Surahs, Tafsir } from "@/types/quran";
 import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize } from "@/utils/localStorage";
 import { sortSurahs } from "@/utils/sortSurahs";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +18,7 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 const QuranPage = () => {
     const [surahId, setSurahId] = useState<number>(1);
     const [verseId, setVerseId] = useState<number>(1);
+    const [verseQuery, setVerseQuery] = useState<string>("");
     const [sort, setSort] = useState("surahNumber-asc");
     const [isVersePlaying, setIsVersePlaying] = useState<boolean>(false);
     const reciterId = getReciterId();
@@ -52,11 +53,23 @@ const QuranPage = () => {
         }
     });
 
+    const {data: quranSearch, isLoading: isLoadingQuranSearch, isError: isQuranSearchError} = useQuery<QuranSearch[]>({
+        queryKey: ["quranSearch", verseQuery],
+        queryFn: async() => {
+            const {data} = await axios.get(`api/quran/search?q=${verseQuery}&translation=${translation}&limit=50`);
+            return data.data.results;
+        }
+    });
+
     const surah = surahs?.find((surah) => surah.number === surahId);
 
     const audio = ayah?.audio.find(audio => audio.reciter_id === reciterId);
 
-    const playVerse = (url: string, verseId: number) => {
+    const playVerse = (url: string, surahId: number, verseId: number) => {
+        setSurahId(surahId);
+        setVerseId(verseId);
+        setIsVersePlaying(true);
+
         const verseAudio = verseAudioRef.current ?? new Audio();
         verseAudioRef.current = verseAudio;
 
@@ -67,9 +80,6 @@ const QuranPage = () => {
 
         verseAudio.src = url;
         verseAudio.play();
-
-        setVerseId(verseId);
-        setIsVersePlaying(true);
 
         verseAudio.onended = () => {
             verseAudio.pause();
@@ -91,9 +101,10 @@ const QuranPage = () => {
         <main className="w-full max-w-7xl mx-auto p-4">
             <h2 className="text-4xl font-bold text-center mb-6">Al Quran</h2>
             <Tabs defaultValue="surahs" className="w-full">
-                <TabsList className="bg-(--card-bg) grid max-md:w-full grid-cols-2 md:inline-flex overflow-x-auto overflow-y-hidden">
+                <TabsList className="bg-(--card-bg) grid max-md:w-full grid-cols-3 md:inline-flex overflow-x-auto overflow-y-hidden">
                     <TabsTrigger value="surahs">Surahs</TabsTrigger>
                     <TabsTrigger value="singleVerse">Single Verse</TabsTrigger>
+                    <TabsTrigger value="searchVerse">Search Verse</TabsTrigger>
                 </TabsList>
                 <TabsContent value="surahs">
                     {isSurahsLoading && <p className="text-center text-2xl font-semibold">Loading surahs...</p>}
@@ -130,26 +141,26 @@ const QuranPage = () => {
                         <div className="grid sm:grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="surahs">Surah</label>
-                                <select id="surahs" className="w-full border border(--border) p-2 rounded-lg" onChange={(e) => {setSurahId(Number(e.target.value)); stopVerse()}}>
+                                <select id="surahs" className="w-full border border(--border) p-2 rounded-lg" value={surahId} onChange={(e) => {setSurahId(Number(e.target.value)); stopVerse()}}>
                                     {surahs?.map((surah: Surahs) => <option key={surah.number} value={surah.number} className="bg-(--bg-primary)">{surah.number}. {surah.name_english}</option>)}
                                 </select>
                             </div>
                             <div>
                                 <label htmlFor="verse">Verse Number</label>
-                                <select id="verse" className="w-full border border(--border) p-2 rounded-lg" onChange={(e) => {setVerseId(Number(e.target.value)); stopVerse()}}>
+                                <select id="verse" className="w-full border border(--border) p-2 rounded-lg" value={verseId} onChange={(e) => {setVerseId(Number(e.target.value)); stopVerse()}}>
                                     {[...Array(surah?.verses_count)].map((_, i) => <option key={i} value={i + 1} className="bg-(--bg-primary)">{i + 1}</option>)}
                                 </select>
                             </div>
                         </div>
                         <h3 className="font-bold text-2xl text-center mb-6">{surah?.name_english} {ayah?.verse.verse_key}</h3>
                         <div className="flex items-center gap-4">
-                            {isVersePlaying ? <button
+                            {isVersePlaying && verseId === ayah?.verse.ayah && surahId === ayah.surah.number ? <button
                                 onClick={stopVerse}
                                 className="p-4 bg-(--bg-tertiary) rounded-full text-sm font-semibold"
                                 >
                                     <FaStop />
                                 </button> : <button
-                                onClick={() => playVerse(audio?.ayah_audio as string, verseId)}
+                                onClick={() => playVerse(audio?.ayah_audio as string, surahId, verseId)}
                                 className="p-4 bg-(--bg-tertiary) rounded-full text-sm font-semibold"
                                 >
                                     <FaPlay />
@@ -168,6 +179,26 @@ const QuranPage = () => {
                         <p className="text-2xl text-center font-semibold mb-2">Tafsir by {tafsir?.author} (<span className="capitalize">{tafsir?.language}</span>)</p>
                         {tafsir?.language === "arabic" ? <p dir="rtl" className={`text-lg ${notoNaskhArabic.className}`}>{tafsir?.text}</p> : <p className="text-lg">{tafsir?.text}</p>}
                         
+                    </div>
+                </TabsContent>
+                <TabsContent value="searchVerse">
+                    <div className="space-y-6">
+                        <div>
+                            <label htmlFor="search">Search Verse</label>
+                            <input type="search" id="search" className="w-full border border(--border) p-2 rounded-lg" onChange={(e) => {setVerseQuery(e.target.value); stopVerse()}} />
+                        </div>
+                        {verseQuery ? quranSearch?.length !== 0 ? quranSearch?.map((search: QuranSearch) => <div key={search.verse_key}>
+                            <h3 className="font-bold text-2xl text-center mb-6">{search.surah_name} {search.verse_key}</h3>
+                            <div className="w-full">
+                                <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{
+                                    fontSize: `${arFontSize}px`
+                                }}>{search.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{search.ayah}</span></p>
+                                <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
+                                    fontSize: `${trFontSize}px`
+                                }}>{search.translation}</p>
+                            </div>
+                            <hr className="bg-(--foreground) mb-2" />
+                        </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{verseQuery}&quot;</p> : <p className="text-center text-2xl font-semibold">Please write something to search</p>}
                     </div>
                 </TabsContent>
             </Tabs>

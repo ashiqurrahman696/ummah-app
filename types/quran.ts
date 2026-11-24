@@ -49,3 +49,12 @@ export interface Tafsir {
     author: string,
     text: string,
 }
+
+export interface QuranSearch {
+    verse_key: string,
+    surah_number: number,
+    surah_name: string,
+    ayah: number,
+    arabic: string,
+    translation: string
+}

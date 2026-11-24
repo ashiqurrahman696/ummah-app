@@ -52,13 +52,13 @@ const SurahPageContent = () => {
         verseAudio.pause();
         verseAudio.currentTime = 0;
 
+        setVerseId(verseId);
+        setIsVersePlaying(true);
+
         if(!url) return alert("Failed to play verse");
 
         verseAudio.src = url;
         verseAudio.play();
-
-        setVerseId(verseId);
-        setIsVersePlaying(true);
 
         verseAudio.onended = () => {
             setVerseId(0);
