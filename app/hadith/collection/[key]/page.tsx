@@ -1,5 +1,6 @@
 "use client";
 
+import Pagination from "@/components/Pagination";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import useAxios from "@/hooks/useAxios";
@@ -46,13 +47,11 @@ const CollectionPageContent = () => {
                     <hr className="bg-(--foreground) mb-2" />
                 </div>)}
             </>}
-            <div className="flex gap-4 items-center justify-center">
-                <Button className="bg-(--bg-secondary) text-(--text-secondary) cursor-pointer text-xl p-4 py-6 hover:bg-(--bg-secondary)" disabled={page === 1} onClick={() => setPage(page - 1)}>&lt; Prev</Button>
-                <select className="border border(--border) p-2 rounded-lg" value={page} onChange={(e) => setPage(Number(e.target.value))}>
-                    {[...Array(collection?.total_pages)].map((_, i) => <option key={i} value={i + 1} className="bg-(--bg-primary)">{i + 1} / {collection?.total_pages}</option>)}
-                </select>
-                <Button className="bg-(--bg-secondary) text-(--text-secondary) cursor-pointer text-xl p-4 py-6 hover:bg-(--bg-secondary)" disabled={page === collection?.total_pages} onClick={() => setPage(page + 1)}>Next &gt;</Button>
-            </div>
+            <Pagination
+                page={page}
+                setPage={setPage}
+                totalPages={collection?.total_pages as number}
+            />
         </main>
     );
 };

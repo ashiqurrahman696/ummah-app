@@ -20,7 +20,7 @@ const SearchVerseTab = ({verseQuery, setVerseQuery, stopVerse, quranSearch, arFo
                     }}>{search.translation}</p>
                 </div>
                 <hr className="bg-(--foreground) mb-2" />
-            </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{verseQuery}&quot;</p> : <p className="text-center text-2xl font-semibold">Please write something to search verse in {translation}</p>}
+            </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{verseQuery}&quot;</p> : <p className="text-center text-2xl font-semibold">Please write something to search verse in {translation} and arabic ayah&apos;s transliteration</p>}
         </div>
     );
 };
