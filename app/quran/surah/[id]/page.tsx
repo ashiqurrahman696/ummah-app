@@ -9,10 +9,7 @@ import { Noto_Naskh_Arabic } from "next/font/google";
 import { useParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
 import { FaPlay, FaStop } from "react-icons/fa6";
-
-const notoNaskhArabic = Noto_Naskh_Arabic({
-    weight: ["400", "500", "600", "700"]
-});
+import { notoNaskhArabic } from "@/utils/arabicFont";
 
 const SurahPageContent = () => {
     const { id } = useParams<{ id: string }>();

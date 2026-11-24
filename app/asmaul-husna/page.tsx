@@ -3,12 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useAxios from "@/hooks/useAxios";
 import { Names } from "@/types/asmaulHusna";
+import { notoNaskhArabic } from "@/utils/arabicFont";
 import { useQuery } from "@tanstack/react-query";
-import { Noto_Naskh_Arabic } from "next/font/google";
-
-const notoNaskhArabic = Noto_Naskh_Arabic({
-    weight: ["400", "500", "600", "700"]
-});
 
 const AsmaulHusna = () => {
     const axios = useAxios();

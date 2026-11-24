@@ -2,15 +2,11 @@
 
 import useAxios from "@/hooks/useAxios";
 import { Dua, Duas } from "@/types/dua";
+import { notoNaskhArabic } from "@/utils/arabicFont";
 import { getArFontSize, getTrFontSize } from "@/utils/localStorage";
 import { useQuery } from "@tanstack/react-query";
-import { Noto_Naskh_Arabic } from "next/font/google";
 import { useParams } from "next/navigation";
 import { Suspense } from "react";
-
-const notoNaskhArabic = Noto_Naskh_Arabic({
-    weight: ["400", "500", "600", "700"]
-});
 
 const DuaCategoryContent = () => {
     const { id } = useParams<{ id: string }>();

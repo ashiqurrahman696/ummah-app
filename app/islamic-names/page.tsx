@@ -5,13 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import useAxios from "@/hooks/useAxios";
 import { Name, Names } from "@/types/islamicNames";
+import { notoNaskhArabic } from "@/utils/arabicFont";
 import { useQuery } from "@tanstack/react-query";
-import { Noto_Naskh_Arabic } from "next/font/google";
 import { useState } from "react";
-
-const notoNaskhArabic = Noto_Naskh_Arabic({
-    weight: ["400", "500", "600", "700"]
-});
 
 const IslamicNamesPage = () => {
     const axios = useAxios();

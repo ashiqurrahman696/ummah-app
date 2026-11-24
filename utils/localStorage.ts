@@ -1,4 +1,4 @@
-import { getCookie, getCookies, setCookie, deleteCookie, hasCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 const saveReciterId = (id: string) => {
     setCookie("reciterId", id);
