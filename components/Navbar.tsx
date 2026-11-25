@@ -34,7 +34,9 @@ const Navbar = () => {
         { name: "Hadith", path: "/hadith" },
         { name: "Duas", path: "/duas" },
         { name: "Prayer Time", path: "/prayer-time" },
+        { name: "Asmaul Husna", path: "/asmaul-husna" },
         { name: "Islamic Names", path: "/islamic-names" },
+        { name: "Islamic Events", path: "/islamic-events" },
     ];
 
 

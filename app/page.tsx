@@ -21,6 +21,9 @@ const cards = [
   {
     title: "Islamic Names", href: "/islamic-names"
   },
+  {
+    title: "Islamic Events", href: "/islamic-events"
+  },
 ];
 
 export default function Home() {

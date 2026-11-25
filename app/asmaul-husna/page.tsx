@@ -19,7 +19,7 @@ const AsmaulHusna = () => {
         <main className="max-w-7xl mx-auto p-4">
             <h2 className="text-4xl font-bold text-center mb-6">99 Names of Allah</h2>
             {isNamesLoading && <p className="text-center text-2xl font-semibold">Loading 99 Names of Allah...</p>}
-            {isNamesError ? <p className="text-center text-2xl font-semibold">Error loading 99 Names of Allah</p> : <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            {isNamesError ? <p className="text-center text-2xl font-semibold">Error loading 99 Names of Allah</p> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                 {names?.map((name: Names) => <Card key={name.number} className="bg-(--card-bg) border-(--border) border size-full text-center">
                     <CardHeader>
                         <CardTitle className="text-lg">
