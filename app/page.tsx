@@ -22,6 +22,9 @@ const cards = [
     title: "Islamic Names", href: "/islamic-names"
   },
   {
+    title: "Islamic Months", href: "/islamic-months"
+  },
+  {
     title: "Islamic Events", href: "/islamic-events"
   },
 ];
