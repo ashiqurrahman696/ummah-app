@@ -102,7 +102,10 @@ const SurahPageContent = () => {
                             <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{ 
                                 fontSize: `${arFontSize}px`
                             }}>{verse.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{verse.ayah}</span></p>
-                            <p className="text-(--text-secondary) my-2" style={{ 
+                            <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                                fontSize: `${trFontSize}px`
+                            }}>{verse.transliteration}</p>
+                            <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                                 fontSize: `${trFontSize}px`
                             }}>{verse.translation}</p>
                         </div>
@@ -133,7 +136,10 @@ const SurahPageContent = () => {
                             <p dir="rtl" className="leading-loose" style={{ 
                                 fontSize: `${arFontSize}px`
                             }}>{surah?.verses[verseId - 1].arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{surah?.verses[verseId - 1].ayah}</span></p>
-                            <p className="text-(--text-secondary) my-2" style={{ 
+                            <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                                fontSize: `${trFontSize}px`
+                            }}>{surah?.verses[verseId - 1].transliteration}</p>
+                            <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                                 fontSize: `${trFontSize}px`
                             }}>{surah?.verses[verseId - 1].translation}</p>
                             <hr className="bg-(--foreground) mb-2" />

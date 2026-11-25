@@ -25,6 +25,7 @@ export interface Ayah {
         verse_key: string,
         ayah: number,
         arabic: string,
+        transliteration: string,
         translations: {
             sahih_international: string,
             pickthall: string,
@@ -56,5 +57,6 @@ export interface QuranSearch {
     surah_name: string,
     ayah: number,
     arabic: string,
+    transliteration: string,
     translation: string
 }

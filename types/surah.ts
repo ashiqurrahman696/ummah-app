@@ -7,6 +7,7 @@ export interface Audio {
 export interface Verse {
     ayah: number,
     arabic: string,
+    transliteration: string,
     translation: string,
     audio: {
         ayah_audio: string

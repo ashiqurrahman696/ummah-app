@@ -15,12 +15,15 @@ const SearchVerseTab = ({verseQuery, setVerseQuery, stopVerse, quranSearch, arFo
                     <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{
                         fontSize: `${arFontSize}px`
                     }}>{search.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{search.ayah}</span></p>
+                    <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                        fontSize: `${trFontSize}px`
+                    }}>{search.transliteration}</p>
                     <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                         fontSize: `${trFontSize}px`
                     }}>{search.translation}</p>
                 </div>
                 <hr className="bg-(--foreground) mb-2" />
-            </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{verseQuery}&quot;</p> : <p className="text-center text-2xl font-semibold">Please write something to search verse in {translation} or arabic ayah&apos;s transliteration</p>}
+            </div>) : <p className="text-center text-2xl font-semibold">No results for &quot;{verseQuery}&quot;</p> : <p className="text-center text-2xl font-semibold">Please write something to search verse in arabic, {translation} or arabic ayah&apos;s transliteration</p>}
         </div>
     );
 };
