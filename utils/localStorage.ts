@@ -16,15 +16,15 @@ const getTafsirKey = () => {
     return getCookie("tafsirKey") || "ibn_kathir";
 }
 
-const saveArFontSize = (id: string) => {
-    setCookie("arFontSize", id);
+const saveArFontSize = (fontSize: string) => {
+    setCookie("arFontSize", fontSize);
 }
 const getArFontSize = () => {
     return Number(getCookie("arFontSize")) || 24;
 }
 
-const saveTrFontSize = (id: string) => {
-    setCookie("trFontSize", id);
+const saveTrFontSize = (fontSize: string) => {
+    setCookie("trFontSize", fontSize);
 }
 
 const getTrFontSize = () => {
@@ -38,6 +38,13 @@ const saveTranslation = (id: string) => {
 const getTranslation = () => {
     return getCookie("translation") || "sahih_international";
 }
+const saveTransliterationSettings = (value: string) => {
+    setCookie("showTransliteration", value);
+}
+
+const getShowTransliteration = () => {
+    return getCookie("showTransliteration") || "no";
+}
 
 export {
     saveReciterId,
@@ -49,5 +56,7 @@ export {
     saveTafsirKey,
     getTafsirKey,
     saveTranslation,
-    getTranslation
+    getTranslation,
+    saveTransliterationSettings,
+    getShowTransliteration
 };

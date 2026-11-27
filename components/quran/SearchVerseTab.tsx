@@ -1,8 +1,10 @@
 import { QuranSearch } from "@/types/quran";
 import { notoNaskhArabic } from "@/utils/arabicFont";
+import { getShowTransliteration } from "@/utils/localStorage";
 import { Dispatch, SetStateAction } from "react";
 
 const SearchVerseTab = ({verseQuery, setVerseQuery, stopVerse, quranSearch, arFontSize, translation, trFontSize}: {verseQuery: string, setVerseQuery: Dispatch<SetStateAction<string>>, stopVerse: () => void, quranSearch: QuranSearch[], arFontSize: number, translation: string, trFontSize: number}) => {
+    const showTransliteration = getShowTransliteration();
     return (
         <div className="space-y-6">
             <div>
@@ -15,9 +17,9 @@ const SearchVerseTab = ({verseQuery, setVerseQuery, stopVerse, quranSearch, arFo
                     <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{
                         fontSize: `${arFontSize}px`
                     }}>{search.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{search.ayah}</span></p>
-                    <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                    {showTransliteration && <p className={`text-(--text-secondary) my-2 italic`} style={{ 
                         fontSize: `${trFontSize}px`
-                    }}>{search.transliteration}</p>
+                    }}>{search.transliteration}</p>}
                     <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                         fontSize: `${trFontSize}px`
                     }}>{search.translation}</p>

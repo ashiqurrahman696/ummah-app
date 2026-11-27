@@ -1,11 +1,10 @@
 "use client";
 import AudioPlayer from "@/components/AudioPlayer";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getShowTransliteration, getTafsirKey, getTranslation, getTrFontSize } from "@/utils/localStorage";
 import { Surah, Tafsir, Verse } from "@/types/surah";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Noto_Naskh_Arabic } from "next/font/google";
 import { useParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
 import { FaPlay, FaStop } from "react-icons/fa6";
@@ -21,6 +20,7 @@ const SurahPageContent = () => {
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
     const tafsirKey = getTafsirKey();
+    const showTransliteration = getShowTransliteration();
     const translation = getTranslation();
     const [isTafsirModalOpen, setIsTafsirModalOpen] = useState<boolean>(false);
 
@@ -102,9 +102,9 @@ const SurahPageContent = () => {
                             <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{ 
                                 fontSize: `${arFontSize}px`
                             }}>{verse.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{verse.ayah}</span></p>
-                            <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                            {showTransliteration === "yes" && <p className={`text-(--text-secondary) my-2 italic`} style={{ 
                                 fontSize: `${trFontSize}px`
-                            }}>{verse.transliteration}</p>
+                            }}>{verse.transliteration}</p>}
                             <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                                 fontSize: `${trFontSize}px`
                             }}>{verse.translation}</p>
@@ -136,9 +136,9 @@ const SurahPageContent = () => {
                             <p dir="rtl" className="leading-loose" style={{ 
                                 fontSize: `${arFontSize}px`
                             }}>{surah?.verses[verseId - 1].arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{surah?.verses[verseId - 1].ayah}</span></p>
-                            <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                            {showTransliteration === "yes" && <p className={`text-(--text-secondary) my-2 italic`} style={{ 
                                 fontSize: `${trFontSize}px`
-                            }}>{surah?.verses[verseId - 1].transliteration}</p>
+                            }}>{surah?.verses[verseId - 1].transliteration}</p>}
                             <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                                 fontSize: `${trFontSize}px`
                             }}>{surah?.verses[verseId - 1].translation}</p>

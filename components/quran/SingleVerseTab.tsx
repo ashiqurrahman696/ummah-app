@@ -1,11 +1,12 @@
 import { Ayah, Surahs, Tafsir } from "@/types/quran";
 import { notoNaskhArabic } from "@/utils/arabicFont";
-import { getReciterId } from "@/utils/localStorage";
+import { getReciterId, getShowTransliteration } from "@/utils/localStorage";
 import { Dispatch, SetStateAction } from "react";
 import { FaPlay, FaStop } from "react-icons/fa6";
 
 const SingleVerseTab = ({surahId, setSurahId, stopVerse, verseId, setVerseId, surahs, ayah, isVersePlaying, playVerse, arFontSize, translation, trFontSize, tafsir}: {surahId: number, setSurahId: Dispatch<SetStateAction<number>>, stopVerse: () => void, verseId: number, setVerseId: Dispatch<SetStateAction<number>>, surahs: Surahs[], ayah: Ayah, isVersePlaying: boolean, playVerse: (url: string, surahId: number, verseId: number) => void, arFontSize: number, translation: string, trFontSize: number, tafsir: Tafsir}) => {
     const reciterId = getReciterId();
+    const showTransliteration = getShowTransliteration();
     const surah = surahs?.find((surah) => surah.number === surahId);
 
     const audio = ayah?.audio.find(audio => audio.reciter_id === reciterId);
@@ -45,9 +46,9 @@ const SingleVerseTab = ({surahId, setSurahId, stopVerse, verseId, setVerseId, su
                     <p dir="rtl" className={`leading-loose ${notoNaskhArabic.className}`} style={{ 
                         fontSize: `${arFontSize}px`
                     }}>{ayah?.verse.arabic.replaceAll("ٱ", "ا")} <span className={`rounded-[50%] border border-(--foreground) p-2 text-xl`}>{ayah?.verse.ayah}</span></p>
-                    <p className={`text-(--text-secondary) my-2 italic`} style={{ 
+                    {showTransliteration === "yes" && <p className={`text-(--text-secondary) my-2 italic`} style={{ 
                         fontSize: `${trFontSize}px`
-                    }}>{ayah?.verse.transliteration}</p>
+                    }}>{ayah?.verse.transliteration}</p>}
                     <p className={`text-(--text-secondary) my-2 ${translation === "urdu" && "text-end"}`} style={{ 
                         fontSize: `${trFontSize}px`
                     }}>{translatedVerse}</p>

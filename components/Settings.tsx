@@ -14,7 +14,8 @@ import { Label } from "./ui/label";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "@/hooks/useAxios";
-import { getArFontSize, getReciterId, getTafsirKey, getTranslation, getTrFontSize, saveArFontSize, saveReciterId, saveTafsirKey, saveTranslation, saveTrFontSize } from "@/utils/localStorage";
+import { getArFontSize, getReciterId, getShowTransliteration, getTafsirKey, getTranslation, getTrFontSize, saveArFontSize, saveReciterId, saveTafsirKey, saveTranslation, saveTransliterationSettings, saveTrFontSize } from "@/utils/localStorage";
+import { Switch } from "./ui/switch";
 
 
 interface Reciter {
@@ -34,6 +35,8 @@ interface Tafsir {
 const Settings = () => {
     const arFontSize = getArFontSize();
     const trFontSize = getTrFontSize();
+    const [showTransliteration, setShowTransliteration] = useState<boolean>(false);
+    const transliteration = getShowTransliteration();
     const axios = useAxios();
 
     const {data: translations} = useQuery({
@@ -63,6 +66,8 @@ const Settings = () => {
     const [reciterId, setReciterId] = useState<number>(getReciterId());
     const [tafsirKey, setTafsirKey] = useState<string>(getTafsirKey() as string);
     const [translation, setTranslation] = useState<string>(getTranslation() as string);
+
+    console.log(transliteration);
 
     return (
         <Drawer swipeDirection="right">
@@ -117,9 +122,13 @@ const Settings = () => {
                             <span>50</span>
                         </div>
                     </div>
+                    <div className="flex items-center space-x-2">
+                        <Switch id="show-transliteration" checked={transliteration === "yes"} onClick={() => {setShowTransliteration(!showTransliteration); saveTransliterationSettings(showTransliteration ? "yes" : "no")}} />
+                        <Label htmlFor="show-transliteration" onClick={() => {setShowTransliteration(!showTransliteration); saveTransliterationSettings(showTransliteration ? "yes" : "no")}} >Show Transliteration</Label>
+                    </div>
                 </div>
                 {<DrawerFooter>
-                    <DrawerClose render={<Button variant="outline" />}>Cancel</DrawerClose>
+                    <DrawerClose render={<Button variant="outline" />}>Close</DrawerClose>
                 </DrawerFooter>}
             </DrawerContent>
         </Drawer>
